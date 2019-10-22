@@ -22,7 +22,6 @@ export const CostDelevery = (props) => {
             total =( parseFloat(allshipping) + parseFloat(taxes) ).toFixed(2)
             
 
-
         }
 
        
