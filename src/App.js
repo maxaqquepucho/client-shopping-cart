@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Home } from "./pages/Home";
+import { GlobalStyle } from './style/GlobalStyled'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Home></Home>
-    </div>
+    <Fragment>
+      <GlobalStyle />
+      <Home />
+
+    </Fragment>
+   
   );
 }
 
