@@ -33,7 +33,7 @@ export const AddButtonProduct = styled.button`
     padding: 5px;
     border-radius: 100%;
     width: 32px;
-
+    color: white;
     :focus {
         outline: none;
     }

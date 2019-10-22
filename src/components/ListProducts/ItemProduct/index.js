@@ -1,18 +1,84 @@
 import React from "react";
-import { ItemList, 
-        ProductData, 
-        ImageContainer, 
-        AddButtonProduct, AddRemove } from "./style";
+import ReactDOM from 'react-dom';
+
+import {
+    ItemList,
+    ProductData,
+    ImageContainer,
+    AddButtonProduct, AddRemove
+} from "./style";
 
 import AddIcon from '../../../assets/images/AddIcon.svg'
 import RemoveIcon from '../../../assets/images/RemoveIcon.svg'
 export class ItemProduct extends React.Component {
+
+    constructor(props) {
+        super(props)
+    }
+
+    state = {
+        showMiniModal: false,
+        count: 0
+    }
+
+    saveLocalStorage = (productsCount) => {
+        
+        const obj = Object.assign(this.props.product,{
+            productId: this.props.product.id,
+            productsCount
+        })
+
+        localStorage.setItem('productSelected', JSON.stringify(obj))
+
+
+    }
+
+    componentDidMount() {
+        document.addEventListener('click', this.handleClickOutside, true);
+    }    
+    componentWillUnmount() {
+
+        document.removeEventListener('click', this.handleClickOutside, true);
+    }    
+    handleClickOutside = event => {
+
+        console.log(event.target);
+        
+        const domNode = ReactDOM.findDOMNode(this);
     
+        if (!domNode || !domNode.contains(event.target)) {
+            this.setState({
+                showMiniModal: false
+            });
+        }
+        
+        
+
+    }    
 
     handleClickAddRemove = () => {
-       // props.setShowAddProducts(true)
+        
+        this.props.setProductId(this.props.product.id)
         const add = parseInt(this.props.countProducts) + 1
         this.props.setCountProducts(add)
+        this.saveLocalStorage(add)
+    }
+
+    handleFirstAdd = () => {
+        
+        this.props.setProductId(this.props.product.id)
+        this.props.setShowAddProducts(true)
+        const add = parseInt(this.props.countProducts) + 1
+
+        let pCount = this.state.count + 1
+
+        this.setState({
+           showMiniModal: true,
+           count: pCount
+        })
+
+        this.props.setCountProducts(add);
+        this.saveLocalStorage(add)
     }
 
     BtnAddDelete = () => {
@@ -20,36 +86,70 @@ export class ItemProduct extends React.Component {
         return (
             <div className="d-flex flex-column align-items-center">
                 {
-                    !this.props.showAddProducts
-                    ? <AddButtonProduct >
-                        <img src={ AddIcon }  width={ 18 } alt="" />
-                    </AddButtonProduct>
-                    : <AddButtonProduct >
-                        { this.props.countProducts }
-                    </AddButtonProduct>
+                    this.state.count == 0 
+                        ? <AddButtonProduct onClick={this.handleFirstAdd} >
+                            <img src={AddIcon} width={18} alt="" />
+                        </AddButtonProduct>
+                        : <AddButtonProduct onClick={() => this.setState({ showMiniModal: true }) } >
+                            {this.props.countProducts}
+                        </AddButtonProduct>
                 }
-                {/* <AddButtonProduct>
-                    <img src={ AddIcon }  width={ 18 } alt="" />
-                </AddButtonProduct> */}
-                {/* <small >
-                    delete
-                </small> */}
+                
+                { this.state.count != 0 
+                    ? <small >delete</small>
+                    : null
+                }
             </div>
         )
+    }
+
+    handleInputCount = (e) => {
+        
+        this.props.setProductId(this.props.product.id)
+        console.log(e.target.value);
+        this.props.setCountProducts(e.target.value);
+        this.saveLocalStorage(e.target.value)
+    }
+
+    subtract = () => {
+        
+        this.props.setProductId(this.props.product.id)
+        if (this.props.countProducts == 0) {           
+            return
+        }
+
+        let num = parseInt(this.props.countProducts) - 1
+        this.props.setCountProducts(num)
+        this.saveLocalStorage(num)
+        if (num == 0) {
+            this.setState({
+                count: 0
+            })
+            return
+        }
+        
+    }
+
+    add = () => {
+        
+        this.props.setProductId(this.props.product.id)
+        let num = parseInt(this.props.countProducts) + 1
+        this.props.setCountProducts(num)
+        this.saveLocalStorage(num)
     }
 
     addRemoveProducts = () => {
         return (
             <AddRemove>
                 <div className="d-flex flex-column align-items-center">
-                    <section >                    
-                        <button>
+                    <section >
+                        <button onClick={ this.subtract }>
                             <img src={RemoveIcon} width={18} alt="" />
                         </button>
-                        <input type="text" />
-                        <button>
+                        <input type="text" onChange={this.handleInputCount} value={this.props.countProducts} />
+                        <button onClick={ this.add } >
                             <img src={AddIcon} width={18} alt="" />
-                        </button>                    
+                        </button>
                     </section>
                     <small className="mt-1" >
                         delete
@@ -58,12 +158,12 @@ export class ItemProduct extends React.Component {
             </AddRemove>
         )
     }
- 
+
     render() {
         const product = this.props.product
 
         return (
-            <ItemList>
+            <ItemList ref='area'>
                 <div className="col-3">
                     <ImageContainer className="row">
                         <img src={product.img} width={100 + '%'} alt="" />
@@ -76,8 +176,8 @@ export class ItemProduct extends React.Component {
                 <div className="col-3 d-flex align-items-center">
                     { this.BtnAddDelete() }
                 </div>
-                {  this.props.showAddProducts ?  this.addRemoveProducts(): null }
-    
+                {this.state.showMiniModal ? this.addRemoveProducts() : null}
+
             </ItemList>
         )
     }

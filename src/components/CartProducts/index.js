@@ -30,6 +30,8 @@ export const CartProduct = props => {
                 setShowAddProducts = {props.setShowAddProducts}
                 countProducts={ props.countProducts }
                 setCountProducts={ props.setCountProducts }
+                productId={ props.productId }
+                setProductId={ props.setProductId }
                 />
             }           
         </ContainerCartProduct>

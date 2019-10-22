@@ -11,6 +11,7 @@ export const Home = () => {
     const [ productName, setProductName ] = useState('')
     const [ countProducts, setCountProducts ] = useState(0)
     const [ showAddProducts, setShowAddProducts ] = useState(false)
+    const [ productId, setProductId ] = useState(null)
 
     const data = [
         {
@@ -35,24 +36,22 @@ export const Home = () => {
             id: '4',
             img: 'http://www.corporacionliderperu.com/shop/29351-thickbox_default/dia-galletas-vainilla-x-250-gr.jpg',
             name: 'Galletas Vainilla',
-            price: '$20'
+            price: '20'
         }
 
     ]
 
-
-
-    function inputSeachChange(e) {
-        setProductName(e.target.value)
-        console.log(e.target.value); 
-    }
+    // function inputSeachChange(e) {
+    //     setProductName(e.target.value)
+    //     console.log(e.target.value); 
+    // }
 
     return (
         <div className="container" >
             <div className="col" >
                 <div className="row mt-5">
                     <div className="col-6">
-                        <InputSearch inputSeachChange={ inputSeachChange } productName={ productName } />
+                        <InputSearch inputSeachChange={ setProductName } productName={ productName } />
                     </div>
                     <div className="col-6"></div>                    
                 </div>
@@ -63,12 +62,20 @@ export const Home = () => {
                         setShowAddProducts = {setShowAddProducts}
                         countProducts={ countProducts }
                         setCountProducts={ setCountProducts }
+                        productId={ productId }
+                        setProductId={ setProductId }
                         />   
                     </div>
                     <div className="col-6">
                         <DateOrder />
                         <div className="mb-3">
-                            <CostDelevery />
+                            <CostDelevery 
+                                countProducts={ countProducts }
+                                setCountProducts={ setCountProducts }
+                                productId={ productId }
+                                setProductId={ setProductId }
+                                products = { data }
+                            />
                         </div>
                         <InputSendOrder />
                     </div>
