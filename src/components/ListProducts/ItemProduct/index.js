@@ -41,8 +41,6 @@ export class ItemProduct extends React.Component {
         document.removeEventListener('click', this.handleClickOutside, true);
     }    
     handleClickOutside = event => {
-
-        console.log(event.target);
         
         const domNode = ReactDOM.findDOMNode(this);
     
@@ -104,11 +102,16 @@ export class ItemProduct extends React.Component {
     }
 
     handleInputCount = (e) => {
-        
+        let inputCound = (e.target.validity.valid) ? e.target.value : 0;
+        if(e.target.value == '') inputCound = 0
         this.props.setProductId(this.props.product.id)
-        console.log(e.target.value);
-        this.props.setCountProducts(e.target.value);
-        this.saveLocalStorage(e.target.value)
+        console.log(inputCound);
+        this.props.setCountProducts(inputCound);
+        if (inputCound == 0 ) {
+            localStorage.removeItem('productSelected')
+            return
+        }
+        this.saveLocalStorage(inputCound)
     }
 
     subtract = () => {
@@ -122,6 +125,9 @@ export class ItemProduct extends React.Component {
         this.props.setCountProducts(num)
         this.saveLocalStorage(num)
         if (num == 0) {
+
+            localStorage.removeItem('productSelected')
+
             this.setState({
                 count: 0
             })
@@ -146,7 +152,7 @@ export class ItemProduct extends React.Component {
                         <button onClick={ this.subtract }>
                             <img src={RemoveIcon} width={18} alt="" />
                         </button>
-                        <input type="text" onChange={this.handleInputCount} value={this.props.countProducts} />
+                        <input type="text" pattern="[0-9]*" onChange={this.handleInputCount} value={this.props.countProducts | 0} />
                         <button onClick={ this.add } >
                             <img src={AddIcon} width={18} alt="" />
                         </button>
@@ -166,7 +172,7 @@ export class ItemProduct extends React.Component {
             <ItemList ref='area'>
                 <div className="col-3">
                     <ImageContainer className="row">
-                        <img src={product.img} width={100 + '%'} alt="" />
+                        <img src={product.img} width={100 + '%'} height={ 100+'%' } alt="" />
                     </ImageContainer>
                 </div>
                 <ProductData className="col-6">

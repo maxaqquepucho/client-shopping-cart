@@ -15,7 +15,7 @@ export const CostDelevery = (props) => {
             product = JSON.parse(product)
 
             shipping = parseFloat(product.price) + ( parseFloat(product.price) * 0.1 )
-            shipping =  product.productsCount ? shipping.toFixed(2): '0.00'
+            shipping =  product.productsCount ? shipping.toFixed(2): 0.00
 
             allshipping =  (shipping * product.productsCount).toFixed(2)
             taxes = (allshipping * 0.18).toFixed(2)

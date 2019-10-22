@@ -20,10 +20,16 @@ function empty() {
 
 export const CartProduct = props => {
     console.log(props.products);
+    let tempProduct = []
+    if (props.products == undefined) {
+        tempProduct = []
+    } else {
+        tempProduct = props.products
+    }
     
     return (
         <ContainerCartProduct>
-            {   !props.products.length    
+            {   !tempProduct.length    
                 ? empty()
                 : <ListProducts products={ props.products }
                 showAddProducts={ props.showAddProducts } 

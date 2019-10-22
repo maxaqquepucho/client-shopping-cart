@@ -27,7 +27,9 @@ export const Button = styled.button`
             font-weight: 5;
             cursor: no-drop !important;
 
-            
+            :hover {
+                background-color: #F7F7F7;
+            }   
         }
         `
     }
