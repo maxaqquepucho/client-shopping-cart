@@ -2,6 +2,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks';
 import { navigate } from '@reach/router'
+import moment from 'moment'
 
 import { Button } from './style'
 import { Loading } from '../../components/Loading'
@@ -66,7 +67,7 @@ export const InputSendOrder =  props => {
     }
 
     const [CreateOrderProduct, { client, loading } ] = useMutation(ADD_ORDER);
-    let { total } = costs =  costs()
+    let { total, id } = costs =  costs()
 
     let disabledBtn = true
     if (total >= 50) {
@@ -78,15 +79,28 @@ export const InputSendOrder =  props => {
             return
         }   
         try {
+
+            costs.deleveryDate = getTomorrowDate()
+
             const res = await CreateOrderProduct(
                 { variables:  { input: costs } }
             )
+            console.log(res.data);
+            
             localStorage.removeItem('productSelected')
-            return navigate("/finishOrder")
+            return navigate(`/finishOrder/${ res.data.createOrderProduct.orderProduct }`)
 
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const getTomorrowDate = () => {
+        let today = new Date()
+        let tomorrow = new Date(today)
+        tomorrow = tomorrow.setDate(tomorrow.getDate() + 1)        
+        tomorrow = moment(tomorrow).format("YYYY-MM-DD")
+        return tomorrow
     }
    
     return (

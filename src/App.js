@@ -30,7 +30,7 @@ const App = () => {
         <GlobalStyle />
         <PosedRouter>          
           <Home path='/' />
-          <FinishOrder path="/finishOrder" />
+          <FinishOrder path="/finishOrder/:order" />
         </PosedRouter>   
     </Fragment>
   );
