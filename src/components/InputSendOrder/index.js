@@ -66,8 +66,8 @@ export const InputSendOrder =  props => {
 
     }
 
-    const [CreateOrderProduct, { client, loading } ] = useMutation(ADD_ORDER);
-    let { total, id } = costs =  costs()
+    const [CreateOrderProduct, { loading } ] = useMutation(ADD_ORDER);
+    let { total } = costs =  costs()
 
     let disabledBtn = true
     if (total >= 50) {

@@ -21,7 +21,7 @@ function empty() {
 export const CartProduct = props => {
     console.log(props.products);
     let tempProduct = []
-    if (props.products == undefined) {
+    if (props.products === undefined) {
         tempProduct = []
     } else {
         tempProduct = props.products
