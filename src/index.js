@@ -7,7 +7,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const client = new ApolloClient({
-    uri: 'http://localhost:5000/graphql'
+    // uri: 'http://localhost:5000/graphql'
+    uri: 'https://mysql-database-reto.herokuapp.com/graphql'
 })
 
 ReactDOM.render(

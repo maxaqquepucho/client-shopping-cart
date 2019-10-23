@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ContainerCartProduct = styled.div`
     background: white;
-    height: 400px;
+    
     position: relative;
 `
 

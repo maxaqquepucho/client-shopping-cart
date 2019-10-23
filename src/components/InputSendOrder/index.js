@@ -1,6 +1,8 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks';
+import { navigate } from '@reach/router'
+
 import { Button } from './style'
 import { Loading } from '../../components/Loading'
 
@@ -72,10 +74,16 @@ export const InputSendOrder =  props => {
     }
 
     async function handleSendOrder () {
+        if (total <= 50) {
+            return
+        }   
         try {
             const res = await CreateOrderProduct(
                 { variables:  { input: costs } }
             )
+            localStorage.removeItem('productSelected')
+            return navigate("/finishOrder")
+
         } catch (error) {
             console.error(error);
         }
