@@ -70,14 +70,14 @@ export const Home = () => {
     return (
         <div className="container" >
             <div className="col" >
-                <div className="row mt-5">
+                <div className="row mt-5 ">
                     <div className="col-6">
                         <InputSearch inputSeachChange={inputSeachChange} productName={productName} />
                     </div>
                     <div className="col-6"></div>
                 </div>
-                <div className="row">
-                    <div className="col-6">
+                <div className="row ">
+                    <div className="mb-5 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                         {
                             !loading 
                             ?
@@ -92,7 +92,7 @@ export const Home = () => {
                             : <Loading />
                         }
                     </div>
-                    <div className="col-6">
+                    <div className="mb-5  col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                         <DateOrder />
                         <div className="mb-3">
                             <CostDelevery

@@ -2,8 +2,12 @@ import styled from 'styled-components'
 
 export const ContainerCartProduct = styled.div`
     background: white;
-    
+    min-height: 180px;
     position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 export const  Empty = styled.div`
