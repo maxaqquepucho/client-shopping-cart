@@ -8,7 +8,7 @@ function empty() {
     return(
         <Empty>
             <SvgEmptyLogo className="mb-2" />
-            <h6>Your cart is empty</h6>
+            <h6>Your cart is empty 1234567</h6>
             <p>Seems like you havent shosen what you buy...</p>
         </Empty>
     )
