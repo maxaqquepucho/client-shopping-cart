@@ -10,7 +10,7 @@ export const InputSearch = (props) => {
              onChange={ (e) => props.inputSeachChange(e.target.value) } 
              value={ props.productName } 
               
-             placeholder={ 'search Products' } />
+             placeholder={ 'search Products123456' } />
         </Container>
     )
 }
